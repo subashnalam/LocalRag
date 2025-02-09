@@ -1,17 +1,15 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-import anthropic
-import openai
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
+from .models import AnthropicModel, OpenAIModel, DeepseekModel
+from .config.settings import Settings
 
 app = FastAPI()
+settings = Settings()
 
-# Load API keys
-anthropic_client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
-openai_client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# Initialize models
+anthropic_model = AnthropicModel(settings.ANTHROPIC_API_KEY)
+openai_model = OpenAIModel(settings.OPENAI_API_KEY)
+deepseek_model = DeepseekModel(settings.DEEPSEEK_API_KEY)
 
 class ChatRequest(BaseModel):
     message: str
@@ -21,28 +19,13 @@ class ChatRequest(BaseModel):
 async def chat(request: ChatRequest):
     try:
         if request.model == "claude":
-            message = anthropic_client.messages.create(
-                model="claude-2",
-                max_tokens=1000,
-                messages=[{"role": "user", "content": request.message}]
-            )
-            return {"response": message.content[0].text}
-            
+            return await anthropic_model.generate_response(request.message)
         elif request.model == "gpt":
-            completion = openai_client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "user", "content": request.message}]
-            )
-            return {"response": completion.choices[0].message.content}
-            
+            return await openai_model.generate_response(request.message)
         elif request.model == "deepseek":
-            # Implement DeepSeek API call here
-            # This is a placeholder as DeepSeek implementation would depend on their API
-            return {"response": "DeepSeek API implementation pending"}
-            
+            return await deepseek_model.generate_response(request.message)
         else:
             raise HTTPException(status_code=400, detail="Invalid model specified")
-            
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
