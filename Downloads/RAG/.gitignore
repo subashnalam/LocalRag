@@ -49,9 +49,12 @@ logs/
 .cache/
 *.cache
 
-# Data (optional - adjust based on your needs)
+# Data - Vector stores and databases
+vector_store/
 *.sqlite3
 *.db
+chroma.sqlite3
+*.bin
 
 # Environment variables
 .env
