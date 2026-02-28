@@ -75,35 +75,6 @@ pytest tests/integration_test/    # Integration tests
 
 ---
 
-## Your Resume Bullet Points — Copy These
-
-Under a new section called **"GenAI Projects"** or **"Technical Projects":**
-
-> **Local RAG System with MCP Integration** *(Personal Project)*
-> - Designed and built a production-grade RAG pipeline with automated document ingestion, ChromaDB vector storage, and OpenAI API integration
-> - Implemented Model Context Protocol (MCP) server enabling AI-native tool integration — a standard introduced by Anthropic in 2024
-> - Built real-time file watcher for automated document processing with state management and startup lifecycle control
-> - Developed comprehensive test suite including unit, functional, and integration tests
-> - Exposed as REST API, tested with Postman and Insomnia across multiple test cycles
-
----
-
-## How to Explain This in 60 Seconds in an Interview
-
-> "I built a local RAG system for developer knowledge management. It automatically watches a folder — when you drop a document in, it processes, chunks, embeds and stores it in ChromaDB automatically. You can then query your entire document base in natural language via REST API. What makes it different is I also built an MCP server on top of it — MCP is Anthropic's Model Context Protocol, a new standard for connecting AI models to external tools. So AI agents can directly query my system as a tool. I wrote integration tests, functional tests, architecture docs, and issue logs throughout the build."
-
-That answer in an interview will make people sit up. Guaranteed.
-
----
-
-## Immediate Next Steps — Today
-
-**1. Clean before pushing to GitHub**
-Remove these before pushing:
-- `.env` file — contains your API key, never push this
-- Issue log txt files — keep the md ones, remove txt clutter
-- `chroma.sqlite3` and binary files in vector_store — add to `.gitignore`
-
 **Add a `.gitignore` with:**
 ```
 .env
