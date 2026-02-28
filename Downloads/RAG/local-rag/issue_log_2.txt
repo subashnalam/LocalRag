@@ -1,0 +1,24 @@
+**Issue:** Dependency Installation Failures
+
+**Description:**
+Multiple errors occurred during the installation of dependencies from `requirements.txt`.
+
+1.  **Initial `pydantic` Conflict:** The application failed to start due to a `TypeError` in `pydantic`, likely caused by a version mismatch with `langchain`'s dependencies.
+2.  **`unstructured` Version Incompatibility:** The specified version `0.14.0` was not compatible with the system's Python version (3.12).
+3.  **`python-magic-win64` Version Not Found:** The specified version `0.4.27` was not available in the package repository.
+4.  **`chroma-hnswlib` Build Failure:** The installation of `chromadb==0.5.0` failed because its dependency, `chroma-hnswlib`, requires "Microsoft C++ Build Tools" which are not installed.
+
+**Resolution Attempts:**
+1.  Updated `requirements.txt` with newer, compatible versions for several packages.
+2.  Corrected the `unstructured` version to a compatible one.
+3.  Corrected the `python-magic-win64` version to the one available.
+4.  Attempted to downgrade `chromadb` to a version with pre-built wheels to avoid the C++ build error.
+
+**Final Resolution:**
+
+The root cause of the persistent installation failures was the `chroma-hnswlib` dependency, which required a C++ compiler. The issue was resolved by taking the following steps:
+
+1.  **Isolated Installation:** Installed `chromadb` separately to identify a version with a pre-compiled binary (`.whl`) compatible with the user's environment.
+2.  **Successful Version Found:** `chromadb==1.0.13` was successfully installed, as it provided a compatible pre-compiled binary.
+3.  **Updated Requirements:** The `requirements.txt` file was updated to use `chromadb==1.0.13`.
+4.  **Full Installation:** All dependencies from the updated `requirements.txt` were successfully installed into the virtual environment.

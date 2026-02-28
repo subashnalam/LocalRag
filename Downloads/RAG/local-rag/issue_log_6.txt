@@ -1,0 +1,18 @@
+# Issue Log: test_document_processor failure
+
+## 1. The Issue
+The integration test suite was failing consistently on `tests/integration_test/test_document_processor.py::test_process_modified_file`. The test was designed to verify that when a document is updated, the old version is removed from the vector store.
+
+## 2. Root Cause Analysis
+The test was failing at the assertion `assert len(results3) == 0`. This assertion checked if a search for the "Original version" of a document returned zero results after the document had been updated to a "Updated version".
+
+The root cause was not a bug in the application code, but a misunderstanding of the vector search behavior in the test itself. The semantic search model (`all-MiniLM-L6-v2`) correctly identified the "Updated version" as being highly similar to the query for "Original version". As a result, the search returned the new document, causing the assertion to fail. The test's logic was too rigid and did not account for the nature of semantic similarity.
+
+## 3. The Fix
+The fix was applied directly to the test case to make the assertion more robust and meaningful for a vector search context. No changes were made to the core application code.
+
+- **File Modified**: `local-rag/tests/integration_test/test_document_processor.py`
+- **Original Assertion**: `assert len(results3) == 0`
+- **New Assertion**: `assert all("Original version" not in r["content"] for r in results3)`
+
+This new assertion correctly verifies the intended behavior: that while the search may find semantically similar results, the exact content of the old document is no longer present in the search results. This change allowed the test to pass while accurately reflecting the system's functionality.

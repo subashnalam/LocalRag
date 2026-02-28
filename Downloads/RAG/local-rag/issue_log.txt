@@ -1,0 +1,10 @@
+**Issue:** AttributeError in src/file_watcher.py
+
+**Description:**
+The `file_watcher` is attempting to call a method named `add_document` on the `VectorStore` object, but the correct method name is `add_documents`.
+
+Additionally, the `file_watcher` is not correctly processing the document before trying to add it to the vector store. It should first use the `DocumentProcessor` to extract text and create chunks, and then pass those chunks to the `VectorStore`.
+
+**Resolution:**
+1. Correct the method call from `add_document` to `add_documents`.
+2. Implement the `DocumentProcessor` to handle document processing before adding to the vector store.

@@ -1,0 +1,7 @@
+python main.py
+Traceback (most recent call last):
+  File "C:\Users\User\Downloads\RAG\local-rag\main.py", line 9, in <module>
+    from src.startup_manager import StartupManager
+  File "C:\Users\User\Downloads\RAG\local-rag\src\startup_manager.py", line 10, in <module>
+    from src.file_watcher import FileWatcher
+ImportError: cannot import name 'FileWatcher' from 'src.file_watcher' (C:\Users\User\Downloads\RAG\local-rag\src\file_watcher.py)

@@ -1,0 +1,7 @@
+{
+  "tool_name": "search_documents",
+  "arguments": {
+    "query": "semantic search",
+    "limit": 2
+  }
+}

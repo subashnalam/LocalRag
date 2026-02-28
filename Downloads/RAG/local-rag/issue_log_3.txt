@@ -1,0 +1,25 @@
+**Issue:** Pydantic `TypeError` on Application Start
+
+**Description:**
+After resolving all dependency installation issues and running the application, a `TypeError` occurs within the `pydantic` library.
+
+**Traceback:**
+```
+Traceback (most recent call last):
+  File "C:\Users\User\Downloads\RAG\local-rag\main.py", line 7, in <module>
+    from src.file_watcher import start_file_watcher
+...
+TypeError: ForwardRef._evaluate() missing 1 required keyword-only argument: 'recursive_guard'
+```
+
+**Root Cause Analysis:**
+The error originates from a version conflict between `pydantic` and `langsmith`. The installed version of `langsmith` is using Pydantic's v1 compatibility layer in a way that is incompatible with the installed version of `pydantic` (v2.7.1).
+
+**Resolution Attempts:**
+1. Upgraded `langsmith` to `0.4.1`. This resolved the `pydantic` error but created a new conflict: `langchain-core==0.2.8` requires `langsmith<0.2.0`, but `0.4.1` is installed.
+
+**Resolution Plan:**
+The dependency tree reveals a three-way conflict. The solution is to upgrade `langchain-core` to a version compatible with `langsmith==0.4.1` and its `pydantic` dependency.
+
+1.  **Upgrade `langchain-core`:** Allow pip to find a compatible version.
+2.  **Update `requirements.txt`:** Pin the new, working versions of all packages.

@@ -1,0 +1,23 @@
+# Core Dependencies
+watchdog==3.0.0
+chromadb==1.0.13
+sentence-transformers==2.7.0
+fastapi==0.111.0
+uvicorn==0.29.0
+
+# Document Processing
+unstructured==0.14.5
+pymupdf==1.24.5
+python-docx==1.1.2
+langchain-core==0.2.5
+langchain-text-splitters==0.2.1
+
+# System & Utils
+pydantic==2.11.7
+loguru==0.7.2
+python-dotenv==0.21.0
+python-magic-win64==0.4.13  # Windows only
+psutil==5.9.8
+
+# Optional (for testing)
+requests==2.31.0
